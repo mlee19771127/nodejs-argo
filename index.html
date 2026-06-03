@@ -1,966 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>大明帝国十六帝电子简历</title>
     <style>
+        :root {
+            --primary-color: #A72626; /* 大明朱红 */
+            --secondary-color: #222222; /* 宣德玄墨 */
+            --bg-color: #F9F6F0; /* 仿古宣纸色 */
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
-        
+
         body {
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
+            padding: 20px;
         }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
+
         header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 3px double var(--primary-color);
             margin-bottom: 30px;
-            max-width: 600px;
         }
-        
-        .hero-buttons {
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* 搜索和筛选区域 */
+        .controls {
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
             display: flex;
             gap: 15px;
+            justify-content: center;
         }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
             transition: all 0.3s;
         }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
+
+        .search-bar:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(167, 38, 38, 0.2);
         }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
+
+        /* 简历网格 */
+        .grid-container {
+            max-width: 1200px;
             margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+
+        .card {
+            background: var(--card-bg);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
+            cursor: pointer;
             position: relative;
+            overflow: hidden;
         }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(167, 38, 38, 0.15);
         }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
+
+        .card-header {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 10px;
         }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
             font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
         }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
+
+        .card-era {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1rem;
         }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
+
+        .card-body p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
             color: #555;
         }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
+
+        .card-body strong {
+            color: #111;
         }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
+
+        .tag {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            color: #666;
         }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+
+        /* 弹窗简历详情 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
         }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 650px;
+            border-radius: 8px;
+            border-left: 8px solid var(--primary-color);
+            padding: 30px;
+            position: relative;
+            animation: slideDown 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
         }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
+
+        .close-btn:hover {
+            color: var(--primary-color);
         }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
+
+        .resume-section {
+            margin-top: 20px;
         }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
+
+        .resume-section h3 {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 8px;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
         }
-        
-        .footer-links {
-            list-style: none;
+
+        .resume-section p {
+            font-size: 0.95rem;
+            color: #444;
+            text-align: justify;
         }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
+
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .controls { flex-direction: column; align-items: center; }
+            .search-bar { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
+
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
+        <h1>大明帝国皇帝文官式简历库</h1>
+        <p>「治隆唐宋，远迈汉唐」· 历经十二世，传十六帝，享国二百七十六年 (1368 - 1644)</p>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="controls">
+        <input type="text" id="search" class="search-bar" placeholder="输入姓名/年号/庙号/治国标签搜索...">
+    </div>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
+    <div class="grid-container" id="repertoire">
+        <!-- 动态生成皇帝卡片 -->
+    </div>
+
+    <!-- 简历详情弹窗 -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <h2 id="m-title" style="color: var(--primary-color); margin-bottom: 5px;"></h2>
+            <p id="m-meta" style="color: #666; font-size: 0.9rem; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;"></p>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
+            <div class="resume-section">
+                <h3>基本个人档案</h3>
+                <p id="m-profile"></p>
+            </div>
+            <div class="resume-section">
+                <h3>职业生涯大事件（政绩/变故）</h3>
+                <p id="m-achievements"></p>
+            </div>
+            <div class="resume-section">
+                <h3>业余爱好与个人标签</h3>
+                <p id="m-hobby"></p>
+            </div>
+            <div class="resume-section">
+                <h3>历史HR综合考评</h3>
+                <p id="m-evaluation" style="font-style: italic; color: #555; background: #fdfaf2; padding: 10px; border-radius: 4px;"></p>
             </div>
         </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
-        }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
-</body>
-</html>
+        // 16位明朝皇帝核心简历数据库
+        const emperors = [
+            { id: 1, name: "朱元璋", temple: "明太祖", era: "洪武", period: "1368-1398", length: "31年", deathAge: "71岁", tag: "开国白手起家", evaluation: "起于草莽，驱逐鞑虏，恢复中华。极力强化皇权，大政勤勉，唯晚年严酷杀戮功臣。", achievements: "推翻元朝建立大明；设立三司确立集权；开创洪武之治；严惩贪官，推行里甲制恢复农业经济。", hobby: "批改奏折（工作狂）、写打油诗。" },
+            { id: 2, name: "朱允炆", temple: "明惠宗", era: "建文", period: "1398-1402", length: "4年", deathAge: "25岁（下落不明）", tag: "悲情实习生", evaluation: "推行仁政，重用文臣。但在毫无政治根基下急于削藩，导致全面溃败，结局令人唏嘘。", achievements: "实行“建文新政”，平反冤狱，宽刑省禁；因削藩引发“靖难之役”，金川门破后失踪。", hobby: "研读儒家经典、与方孝孺切磋学问。" },
+            { id: 3, name: "朱棣", temple: "明成祖", era: "永乐", period: "1402-1424", length: "22年", deathAge: "65岁", tag: "逆袭的千古一帝", evaluation: "雄才大略，武功赫赫，威服四海。虽得位不正，但其治下大明国力达到了巅峰。", achievements: "五次亲征漠北；派郑和七下西洋；修筑北京城并迁都；组织编纂《永乐大典》；设立内阁与东厂。", hobby: "御驾亲征（热衷战阵）、宏大工程规划。" },
+            { id: 4, name: "朱高炽", temple: "明仁宗", era: "洪熙", period: "1424-1425", length: "10个月", deathAge: "48岁", tag: "高评价仁厚高管", evaluation: "在位虽短，但政治清明。修正了父祖的严苛政策，为“仁宣之治”奠定了极其扎实的基础。", achievements: "平反靖难冤案，释放大量及没收官员家属；停罢郑和下西洋与边境用兵，休养生息；计划迁回南京（未果）。", hobby: "监国、喜好儒学、美食（导致体胖）。" },
+            { id: 5, name: "朱瞻基", temple: "明宣宗", era: "宣德", period: "1425-1435", length: "10年", deathAge: "38岁", tag: "文体两开花", evaluation: "文治武功兼备，与父亲合称“仁宣之治”。促成大明经济文化黄金期，唯开启太监识字埋下后患。", achievements: "平定汉王朱高煦叛乱；战略收缩主动撤兵交趾（越南）；派遣郑和最后一次下西洋；使得社会安定、经济繁荣。", hobby: "斗蟋蟀（人称蟋蟀皇帝）、擅长工笔书画。" },
+            { id: 6, name: "朱祁镇", temple: "明英宗", era: "正统/天顺", period: "1435-1449, 1457-1464", length: "22年", deathAge: "38岁", tag: "复辟留学生", evaluation: "大明由盛转衰的关键转折者。宠信太监导致土木堡惨败，但晚年废除惨无人道的嫔妃殉葬制度，留有人性闪光点。", achievements: "御驾亲征遭遇“土木堡之变”被俘；被放回后遭软禁，后发动“夺门之变”复辟；杀害抗敌功臣于谦。", hobby: "听信宦官（前期王振、后期曹吉祥）、微服出巡。" },
+            { id: 7, name: "朱祁钰", temple: "明代宗", era: "景泰", period: "1449-1457", length: "8年", deathAge: "29岁", tag: "救时临危受命", evaluation: "在帝国最危难之际挺身而出，支持于谦击退瓦剌，稳定江山。功在社稷，唯晚年易储风波引发内部撕裂。", achievements: "即位后重用于谦取得“北京保卫战”胜利；组织抗击水患，治理黄河；稳定正统朝留下的全面危机。", hobby: "鉴赏古玩、操练京营兵马。" },
+            { id: 8, name: "朱见深", temple: "明宪宗", era: "成化", period: "1464-1487", length: "23年", deathAge: "41岁", tag: "深情专一守成者", evaluation: "性格懦弱矛盾，宽仁有之、昏庸有之。终身痴迷于大自己17岁的万贵妃；成化犁庭重创女真，功劳极大。", achievements: "平反景泰帝与于谦冤案；设立西厂特务机构；多次对建州女真进行毁灭性军事打击（成化犁庭）；修筑成化朝长城。", hobby: "修仙炼丹、收集成化斗彩鸡缸杯。" },
+            { id: 9, name: "朱祐樘", temple: "明孝宗", era: "弘治", period: "1487-1505", length: "18年", deathAge: "36岁", tag: "完美道德模范", evaluation: "明代最纯粹、口碑最好的皇帝之一。恭检仁厚，孤身践行一夫一妻制，史称“弘治中兴”。", achievements: "求贤纳谏，罢免成化朝奸佞道士；修订《大明会典》；大力减免赋税，疏浚大运河，百姓安居乐业。", hobby: "弹琴、钻研儒学、做木工。" },
+            { id: 10, name: "朱厚照", temple: "明武宗", era: "正德", period: "1505-1521", length: "16年", deathAge: "31岁", tag: "叛逆行为艺术家", evaluation: "极具争议。极度反叛传统礼教，建立豹房沉湎享乐。但他亲自指挥应州大捷且不杀谏臣，死于贪玩落水。", achievements: "建“豹房”自封“大将军朱寿”；亲自指挥应州大捷击败蒙古达延汗；平定宁王朱宸濠叛乱。", hobby: "驯兽、打仗演习、角色扮演、异域文化。" },
+            { id: 11, name: "朱厚熜", temple: "明世宗", era: "嘉靖", period: "1521-1566", length: "45年", depthAge: "60岁", tag: "控场型修仙宅男", evaluation: "聪明绝顶的权谋大师。二十年不上朝仍牢牢掌控朝局。严嵩擅权、南倭北虏引发全面困局，晚年引发壬寅宫变。", achievements: "通过“大礼议”压倒满朝文臣夺取大权；起用海瑞、戚继光平定东南倭寇；晚年长期隐居西苑修玄。", hobby: "崇道修仙、写青词、吸猫（册封御猫）。" },
+请谨慎使用此类代码。{ id: 12, name: "朱载坖", temple: "明穆宗", era: "隆庆", period: "1566-1572", length: "6年", deathAge: "36岁", tag: "隐形无为而治", evaluation: "性格木讷寡言，但极为识人。放权给徐阶、高拱、张居正，推动大明重新开眼看世界。", achievements: "推行“隆庆开关”解除海禁，白银大量流入；促成“俺答封贡”结束北方长达两百年的战火。", hobby: "收集民间珠宝、后宫享乐。" },{ id: 13, name: "朱翊钧", temple: "明神宗", era: "万历", period: "1572-1620", length: "48年", deathAge: "57岁", tag: "旷工记录保持者", evaluation: "在位时间最长。前十年因张居正改革国力恢复。因国本之争赌气近三十年不出宫不上朝，明亡始于万历。", achievements: "支持张居正推行“一条鞭法”改革；主持“万历三大征”巩固疆土；萨尔浒之战大败于后金，辽东告急。", hobby: "清算张居正家产、藏匿银两、拒绝上班。" },{ id: 14, name: "朱常洛", temple: "明光宗", era: "泰昌", period: "1620-1620", length: "1个月", deathAge: "38岁", tag: "闪退帝", evaluation: "苦熬多年终登基，连年号都还没来得及普及，便因纵欲和红丸案猝死，堪称“体验卡皇帝”。", achievements: "废除万历朝极度惹民怨的矿税、税监；拨银犒赏辽东边防军队；因“红丸案”暴毙引发后宫大乱。", hobby: "沉溺女色（积郁成疾）。" },{ id: 15, name: "朱由校", temple: "明熹宗", era: "天启", period: "1620-1627", length: "7年", deathAge: "23岁", tag: "鲁班转世木匠", evaluation: "文盲皇帝，严重偏科。将政务全权委托给魏忠贤，导致阉党横行、朝政极度腐败，客氏祸乱后宫。", achievements: "重用魏忠贤导致东林党争惨烈；辽东战线崩溃，仅靠孙承宗、袁崇焕死守宁远；深宫中醉心手工建造。", hobby: "木工制造（手艺达大师级）、操纵提线木偶、盖小房子。" },{ id: 16, name: "朱由检", temple: "明思宗", era: "崇祯", period: "1624-1644", length: "17年", deathAge: "34岁", tag: "悲壮的接盘侠", evaluation: "志高才疏，生不逢时。极其勤政且节俭，但生性多疑，频繁更换首辅并误杀袁崇焕，最终无力回天，自缢殉国。", achievements: "秒杀魏忠贤，全面清算阉党；面临内忧（李自成农民起义）与外患（清兵入关）双重夹击；1644年于煤山自缢。", hobby: "疯狂批阅奏折、自我检讨（六下罪己诏）。" }];// 渲染简历卡片function renderCards(data) {const container = document.getElementById('repertoire');container.innerHTML = '';if(data.length === 0) {container.innerHTML = <p style="grid-column: 1/-1; text-align:center; color:#999; padding: 40px;">未找到匹配的大明皇帝履历。</p>;return;}data.forEach(emp => {const card = document.createElement('div');card.className = 'card';card.onclick = () => openModal(emp);card.innerHTML = <div class="card-header"> <span class="card-title">${emp.temple} · ${emp.name}</span> <span class="card-era">【${emp.era}】</span> </div> <div class="card-body"> <p><strong>在位期间：</strong>${emp.period} (${emp.length})</p> <p><strong>享年寿数：</strong>${emp.deathAge}</p> <p><strong>一句话生平：</strong>${emp.evaluation.substring(0, 32)}...</p> <span class="tag"># ${emp.tag}</span> </div>;container.appendChild(card);});}// 搜索过滤功能document.getElementById('search').addEventListener('input', (e) => {const val = e.target.value.toLowerCase();const filtered = emperors.filter(emp =>emp.name.includes(val) ||emp.temple.toLowerCase().includes(val) ||emp.era.includes(val) ||emp.tag.includes(val) ||emp.achievements.includes(val));renderCards(filtered);});// 模态窗控制const modal = document.getElementById('modal');function openModal(emp) {document.getElementById('m-title').innerText = ${emp.temple} · ${emp.name} （年号：${emp.era}）;document.getElementById('m-meta').innerText = 在位：${emp.period} (共计 ${emp.length})  |  寿数：${emp.deathAge};document.getElementById('m-profile').innerHTML = 本名<strong>${emp.name}</strong>，大明王朝第 <strong>${emp.id}</strong> 位登基统治者。简历核心标签：<span style="color:var(--primary-color)">${emp.tag}</span>。;document.getElementById('m-achievements').innerText = emp.achievements;document.getElementById('m-hobby').innerText = emp.hobby;document.getElementById('m-evaluation').innerText = 【大历史HR评语】 ${emp.evaluation};modal.style.display = 'flex';}document.getElementById('closeBtn').onclick = () => modal.style.display = 'none';window.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; }// 初始化renderCards(emperors);
